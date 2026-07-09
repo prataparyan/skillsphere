@@ -4,6 +4,9 @@ import ProtectedRoute from './components/common/ProtectedRoute.jsx';
 import Register from './pages/auth/Register.jsx';
 import Login from './pages/auth/Login.jsx';
 import Dashboard from './pages/dashboard/Dashboard.jsx';
+import GigList from './pages/gigs/GigList.jsx';
+import CreateGig from './pages/gigs/CreateGig.jsx';
+import GigDetail from './pages/gigs/GigDetail.jsx';
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -19,31 +22,13 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public routes */}
-        <Route
-          path="/register"
-          element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />}
-        />
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />}
-        />
-
-        {/* Protected routes */}
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        />
-
-        {/* Default redirect */}
-        <Route
-          path="/"
-          element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} />}
-        />
+        <Route path="/register" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Register />} />
+        <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" /> : <Login />} />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/gigs" element={<GigList />} />
+        <Route path="/gigs/create" element={<ProtectedRoute><CreateGig /></ProtectedRoute>} />
+        <Route path="/gigs/:id" element={<GigDetail />} />
+        <Route path="/" element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} />} />
       </Routes>
     </BrowserRouter>
   );
