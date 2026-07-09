@@ -10,6 +10,7 @@ import proposalRoutes from './routes/proposalRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
 import Message from './models/Message.js';
 import reviewRoutes from './routes/reviewRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ app.use('/api/gigs', gigRoutes);
 app.use('/api/proposals', proposalRoutes);
 app.use('/api/messages', messageRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/admin', adminRoutes);
 
 app.get('/', (req, res) => {
   res.json({ message: 'SkillSphere API is running' });
