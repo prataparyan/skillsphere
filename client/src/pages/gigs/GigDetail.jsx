@@ -165,6 +165,14 @@ const GigDetail = () => {
             <h3 className="font-semibold text-gray-900 mb-2">Posted By</h3>
             <p className="text-gray-700 font-medium">{gig.client?.name}</p>
             <p className="text-gray-400 text-sm">{gig.client?.email}</p>
+            {user && user.role === 'freelancer' && (
+  <Link
+    to={`/chat/${gig.client?._id}`}
+    className="mt-3 block text-center bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700"
+  >
+    Message Client
+  </Link>
+)}
           </div>
         </div>
       </div>

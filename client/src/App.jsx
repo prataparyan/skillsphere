@@ -7,6 +7,7 @@ import Dashboard from './pages/dashboard/Dashboard.jsx';
 import GigList from './pages/gigs/GigList.jsx';
 import CreateGig from './pages/gigs/CreateGig.jsx';
 import GigDetail from './pages/gigs/GigDetail.jsx';
+import Chat from './pages/chat/Chat.jsx';
 
 const App = () => {
   const { isAuthenticated, loading } = useAuth();
@@ -29,6 +30,7 @@ const App = () => {
         <Route path="/gigs/create" element={<ProtectedRoute><CreateGig /></ProtectedRoute>} />
         <Route path="/gigs/:id" element={<GigDetail />} />
         <Route path="/" element={<Navigate to={isAuthenticated ? '/dashboard' : '/login'} />} />
+        <Route path="/chat/:userId" element={<ProtectedRoute><Chat /></ProtectedRoute>} />
       </Routes>
     </BrowserRouter>
   );
