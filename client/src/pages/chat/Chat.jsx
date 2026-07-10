@@ -15,7 +15,7 @@ const Chat = () => {
   const bottomRef = useRef(null);
 
   useEffect(() => {
-    socket = io('http://localhost:5000');
+    socket = io(import.meta.env.VITE_API_URL?.replace('/api', '') || 'http://localhost:5000');
     socket.emit('join', user._id || user.id);
 
     socket.on('receiveMessage', (message) => {
