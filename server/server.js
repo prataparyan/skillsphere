@@ -8,24 +8,30 @@ import authRoutes from './routes/authRoutes.js';
 import gigRoutes from './routes/gigRoutes.js';
 import proposalRoutes from './routes/proposalRoutes.js';
 import messageRoutes from './routes/messageRoutes.js';
-import Message from './models/Message.js';
 import reviewRoutes from './routes/reviewRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import Message from './models/Message.js';
 
 dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.CLIENT_URL,
+].filter(Boolean);
+
 const io = new Server(httpServer, {
   cors: {
-    origin: 'http://localhost:5173',
+    origin: allowedOrigins,
     methods: ['GET', 'POST'],
   },
 });
 
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: 'http://localhost:5173', credentials: true }));
+app.use(cors({ origin: allowedOrigins, credentials: true }));
 app.use(express.json());
 
 app.use('/api/auth', authRoutes);
@@ -39,7 +45,6 @@ app.get('/', (req, res) => {
   res.json({ message: 'SkillSphere API is running' });
 });
 
-// Socket.IO
 const onlineUsers = new Map();
 
 io.on('connection', (socket) => {
@@ -48,7 +53,6 @@ io.on('connection', (socket) => {
   socket.on('join', (userId) => {
     onlineUsers.set(userId, socket.id);
     socket.join(userId);
-    console.log(`User ${userId} joined`);
   });
 
   socket.on('sendMessage', async ({ senderId, receiverId, content }) => {
@@ -72,7 +76,6 @@ io.on('connection', (socket) => {
     onlineUsers.forEach((socketId, userId) => {
       if (socketId === socket.id) onlineUsers.delete(userId);
     });
-    console.log('User disconnected:', socket.id);
   });
 });
 
