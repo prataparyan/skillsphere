@@ -1,5 +1,6 @@
 import Proposal from '../models/Proposal.js';
 import Gig from '../models/Gig.js';
+import Notification from '../models/Notification.js';
 
 export const submitProposal = async (req, res) => {
   try {
@@ -18,6 +19,14 @@ export const submitProposal = async (req, res) => {
     });
 
     await Gig.findByIdAndUpdate(gig, { $inc: { proposalCount: 1 } });
+
+    // Notify the client
+    await Notification.create({
+      recipient: gigDoc.client,
+      type: 'proposal_received',
+      message: `You received a new proposal on "${gigDoc.title}"`,
+      link: `/gigs/${gigDoc._id}`,
+    });
 
     res.status(201).json({ success: true, proposal });
   } catch (error) {
@@ -58,6 +67,16 @@ export const updateProposalStatus = async (req, res) => {
 
     proposal.status = status;
     await proposal.save();
+
+    // Notify the freelancer
+    await Notification.create({
+      recipient: proposal.freelancer,
+      type: status === 'accepted' ? 'proposal_accepted' : 'proposal_rejected',
+      message: status === 'accepted'
+        ? `Your proposal was accepted! Check your gig.`
+        : `Your proposal was not selected this time.`,
+      link: `/gigs/${proposal.gig._id}`,
+    });
 
     if (status === 'accepted') {
       await Gig.findByIdAndUpdate(proposal.gig._id, {
