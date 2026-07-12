@@ -52,11 +52,28 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">SkillSphere Admin</Link>
+      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between sticky top-0 z-50">
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-600">{user?.name}</span>
-          <button onClick={logout} className="text-sm text-red-500 hover:text-red-700">Logout</button>
+          <Link to="/" className="text-xl font-bold text-blue-600">
+            SkillSphere
+          </Link>
+          <span className="text-sm text-gray-400">|</span>
+          <span className="text-sm font-medium text-gray-600">Admin Panel</span>
+          <Link
+            to="/gigs"
+            className="text-sm text-gray-500 hover:text-blue-600 transition-colors"
+          >
+            ← Back to Site
+          </Link>
+        </div>
+        <div className="flex items-center gap-4">
+          <span className="text-sm text-gray-600 font-medium">{user?.name}</span>
+          <button
+            onClick={logout}
+            className="text-sm text-red-500 hover:text-red-700 font-medium transition-colors"
+          >
+            Logout
+          </button>
         </div>
       </nav>
 

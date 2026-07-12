@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import API from '../../api/axios.js';
+import Navbar from '../../components/layout/Navbar.jsx';
 
 const CATEGORIES = [
   { value: '', label: 'All Categories' },
@@ -43,17 +44,7 @@ const GigList = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Navbar */}
-      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">SkillSphere</Link>
-        <div className="flex gap-4">
-          <Link to="/gigs/create" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">
-            Post a Gig
-          </Link>
-          <Link to="/dashboard" className="text-gray-600 text-sm font-medium hover:text-gray-900 py-2">
-            Dashboard
-          </Link>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="max-w-5xl mx-auto px-6 py-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Find Gigs</h1>

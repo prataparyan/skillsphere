@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import API from '../../api/axios.js';
 import { useAuth } from '../../context/AuthContext.jsx';
+import Navbar from '../../components/layout/Navbar.jsx';
 
 const CATEGORIES = [
   { value: 'web-development', label: 'Web Development' },
@@ -71,10 +72,7 @@ const CreateGig = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">SkillSphere</Link>
-        <Link to="/gigs" className="text-gray-600 text-sm hover:text-gray-900">Browse Gigs</Link>
-      </nav>
+      <Navbar />
 
       <div className="max-w-2xl mx-auto px-6 py-8">
         <h1 className="text-2xl font-bold text-gray-900 mb-6">Post a New Gig</h1>

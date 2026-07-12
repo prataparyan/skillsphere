@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import API from '../../api/axios.js';
 import { useAuth } from '../../context/AuthContext.jsx';
+import Navbar from '../../components/layout/Navbar.jsx';
 
 const GigDetail = () => {
   const { id } = useParams();
@@ -104,15 +105,12 @@ const GigDetail = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">
-          SkillSphere
-        </Link>
-        <Link to="/gigs" className="text-gray-600 text-sm hover:text-gray-900">
+      <Navbar />
+      <div className="max-w-4xl mx-auto px-6 pt-4">
+        <Link to="/gigs" className="text-sm text-gray-500 hover:text-blue-600 flex items-center gap-1">
           ← Back to Gigs
         </Link>
-      </nav>
-
+      </div>
       <div className="max-w-4xl mx-auto px-6 py-8 grid grid-cols-3 gap-6">
         {/* Main Content */}
         <div className="col-span-2 space-y-6">

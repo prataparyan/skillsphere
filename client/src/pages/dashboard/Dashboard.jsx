@@ -2,9 +2,10 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import API from '../../api/axios.js';
 import { useAuth } from '../../context/AuthContext.jsx';
+import Navbar from '../../components/layout/Navbar.jsx';
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
+  const { user } = useAuth();
   const navigate = useNavigate();
   const [gigs, setGigs] = useState([]);
   const [proposals, setProposals] = useState([]);
@@ -35,19 +36,7 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">SkillSphere</Link>
-        <div className="flex items-center gap-6">
-          <Link to="/gigs" className="text-gray-600 text-sm hover:text-gray-900">Browse Gigs</Link>
-          {user?.role === 'client' && (
-            <Link to="/gigs/create" className="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700">
-              Post a Gig
-            </Link>
-          )}
-          <span className="text-gray-600 text-sm">{user?.name} ({user?.role})</span>
-          <button onClick={logout} className="text-sm text-red-500 hover:text-red-700 font-medium">Logout</button>
-        </div>
-      </nav>
+      <Navbar />
 
       <main className="max-w-5xl mx-auto px-6 py-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6">

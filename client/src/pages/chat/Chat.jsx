@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import API from '../../api/axios.js';
 import { useAuth } from '../../context/AuthContext.jsx';
+import Navbar from '../../components/layout/Navbar.jsx';
 
 let socket;
 
@@ -60,10 +61,7 @@ const Chat = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      <nav className="bg-white shadow-sm px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="text-xl font-bold text-blue-600">SkillSphere</Link>
-        <Link to="/dashboard" className="text-gray-600 text-sm hover:text-gray-900">Dashboard</Link>
-      </nav>
+      <Navbar />
 
       <div className="flex-1 max-w-3xl w-full mx-auto px-6 py-6 flex flex-col">
         <div className="bg-white rounded-xl shadow-sm flex flex-col flex-1 overflow-hidden">
