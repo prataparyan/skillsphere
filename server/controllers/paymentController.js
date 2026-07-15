@@ -5,16 +5,16 @@ import Gig from '../models/Gig.js';
 import Proposal from '../models/Proposal.js';
 import Notification from '../models/Notification.js';
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
 
 // @desc    Create Razorpay order
 // @route   POST /api/payments/create-order
 // @access  Private (client only)
 export const createOrder = async (req, res) => {
   try {
+    const razorpay = new Razorpay({
+      key_id: process.env.RAZORPAY_KEY_ID,
+      key_secret: process.env.RAZORPAY_KEY_SECRET,
+    });
     const { gigId, proposalId } = req.body;
 
     const proposal = await Proposal.findById(proposalId);
@@ -37,7 +37,7 @@ export const createOrder = async (req, res) => {
     const order = await razorpay.orders.create({
       amount: amountInPaise,
       currency: 'INR',
-      receipt: `receipt_${gigId}_${Date.now()}`,
+      receipt: `rcpt_${Date.now()}`,
       notes: {
         gigId,
         proposalId,
@@ -63,8 +63,9 @@ export const createOrder = async (req, res) => {
       key: process.env.RAZORPAY_KEY_ID,
     });
   } catch (error) {
-    res.status(500).json({ success: false, message: error.message });
-  }
+  console.error('Payment create-order error:', error);
+  res.status(500).json({ success: false, message: error.message });
+}
 };
 
 // @desc    Verify payment after Razorpay callback

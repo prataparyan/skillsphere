@@ -294,18 +294,24 @@ const GigDetail = () => {
                             )}
 
                             {/* Pay Now button — accepted proposal on in-progress gig */}
-                            {p.status === 'accepted' &&
-                              gig.status === 'in-progress' && (
-                                <button
-                                  onClick={() => handlePayment(p)}
-                                  disabled={paymentLoading}
-                                  className="px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
-                                >
-                                  {paymentLoading
-                                    ? 'Processing...'
-                                    : `Pay ₹${p.bidAmount}`}
-                                </button>
-                              )}
+                            {p.status === 'accepted' && (
+                              <div className="flex gap-2">
+                                <Link
+                                  to={`/chat/${p.freelancer?._id}`}
+                                  className="px-4 py-1.5 bg-blue-50 text-blue-600 text-sm rounded-lg hover:bg-blue-100 font-medium">
+                                  Chat
+                                </Link>
+                                {gig.status === 'in-progress' && (
+                                  <button
+                                    onClick={() => handlePayment(p)}
+                                    disabled={paymentLoading}
+                                    className="px-4 py-1.5 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700 font-medium disabled:opacity-50"
+                                  >
+                                    {paymentLoading ? 'Processing...' : `Pay ₹${p.bidAmount}`}
+                                  </button>
+                                )}
+                              </div>
+                            )}
                           </div>
                         </div>
                       </div>
