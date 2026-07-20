@@ -33,6 +33,18 @@ A full-stack MERN freelance marketplace connecting clients with freelancers. Bui
 - Persistent message history stored in MongoDB
 - Clients and freelancers can communicate directly from gig pages
 
+### Payment Integration
+- Razorpay payment gateway integration
+- Secure payment verification using HMAC SHA256 signature
+- Automatic gig completion after successful payment
+- Payment history tracking per user
+
+### Notifications
+- Real-time notification bell with unread count badge
+- Notifications for proposal received, accepted, and rejected
+- Payment received notifications for freelancers
+- Click-to-navigate from notification to relevant gig
+
 ### Admin Dashboard
 - Platform statistics (total users, gigs, proposals)
 - User management with suspend/activate functionality
@@ -63,6 +75,7 @@ A full-stack MERN freelance marketplace connecting clients with freelancers. Bui
 - bcryptjs for password hashing
 - Socket.IO for real-time features
 - express-validator for input validation
+- Razorpay payment gateway
 
 ### Deployment
 - Frontend: Vercel
@@ -78,6 +91,8 @@ SkillSphere/
 │   ├── src/
 │   │   ├── api/             # Axios configuration
 │   │   ├── components/      # Reusable UI components
+│   │   │   ├── common/      # ProtectedRoute
+│   │   │   └── layout/      # Shared Navbar
 │   │   ├── context/         # AuthContext (global auth state)
 │   │   ├── hooks/           # Custom React hooks
 │   │   ├── pages/           # Page components by feature
@@ -131,6 +146,20 @@ SkillSphere/
 | GET | /api/messages/:userId | Get conversation | Yes |
 | GET | /api/messages/conversations | Get all conversations | Yes |
 
+### Payments
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| POST | /api/payments/create-order | Create Razorpay order | Client |
+| POST | /api/payments/verify | Verify payment signature | Client |
+| GET | /api/payments/my-payments | Payment history | Yes |
+
+### Notifications
+| Method | Endpoint | Description | Auth |
+|--------|----------|-------------|------|
+| GET | /api/notifications | Get all notifications | Yes |
+| GET | /api/notifications/unread-count | Get unread count | Yes |
+| PUT | /api/notifications/mark-read | Mark all as read | Yes |
+
 ### Admin
 | Method | Endpoint | Description | Auth |
 |--------|----------|-------------|------|
@@ -146,6 +175,7 @@ SkillSphere/
 ### Prerequisites
 - Node.js v18+
 - MongoDB Atlas account
+- Razorpay account (test mode)
 - Git
 
 ### Installation
@@ -173,10 +203,13 @@ MONGO_URI=your_mongodb_atlas_connection_string
 JWT_SECRET=your_jwt_secret
 NODE_ENV=development
 CLIENT_URL=http://localhost:5173
+RAZORPAY_KEY_ID=your_razorpay_key_id
+RAZORPAY_KEY_SECRET=your_razorpay_key_secret
 
 Create `client/.env`:
 
 VITE_API_URL=http://localhost:5000/api
+VITE_RAZORPAY_KEY_ID=your_razorpay_key_id
 
 ### Running Locally
 
@@ -188,7 +221,7 @@ npm run dev
 npm run dev
 ```
 
-Frontend: http://localhost:5173
+Frontend: http://localhost:5173  
 Backend: http://localhost:5000
 
 ---
@@ -198,13 +231,28 @@ Backend: http://localhost:5000
 | Role | Email | Password |
 |------|-------|----------|
 | Admin | admin@skillsphere.com | admin123 |
+| Client | rahul@demo.com | Demo@1234 |
 | Client | client@demo.com | Demo@1234 |
-| Freelancer | freelancer@demo.com | Demo@1234 |
+| Freelancer | priya@demo.com | Demo@1234 |
+| Freelancer | rohan@demo.com | Demo@1234 |
+
+> ⚠️ Note: The backend is hosted on Render free tier and may take 30-50 seconds to wake up after inactivity. Please wait for the first request to complete.
+
+---
+
+## Test Payment
+
+Use these Razorpay test card details to simulate a payment:
+
+Card Number: 5104 0155 5555 5558
+Expiry: 12/26
+CVV: 123
+OTP: 1234 (if prompted)
 
 ---
 
 ## Developer
 
-**Aryan Pratap Singh**
-Full Stack Development Intern — Nayoda
+**Aryan Pratap Singh**  
+Full Stack Development Intern — Nayoda  
 GitHub: [@prataparyan](https://github.com/prataparyan)
